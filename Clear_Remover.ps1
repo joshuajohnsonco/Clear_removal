@@ -5,6 +5,7 @@ Start-Transcript -Path "c:\temp\Clear_remover.txt"
 
 #Kills the process if running:
 Get-Process -Name clear -ErrorAction SilentlyContinue | Stop-Process -Force
+Get-Process -Name clearbar -ErrorAction SilentlyContinue | Stop-Process -Force
 Get-Process -Name clearbrowser -ErrorAction SilentlyContinue | Stop-Process -Force
 
 #Checks each user folder and removes Clear instance from \appdata\local\programs\ and the downloads folder.
