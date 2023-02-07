@@ -4,10 +4,8 @@ New-Item -Path 'C:\temp' -ItemType Directory -Force
 Start-Transcript -Path "c:\temp\Clear_remover.txt"
 
 #Kills the process if running:
-Stop-Process -Force -Name clear.exe
-Stop-Process -Force -Name clearbrowser.exe
-Stop-Process -Force -Name clear
-Stop-Process -Force -Name clearbrowser
+Get-Process -Name clear -ErrorAction SilentlyContinue | Stop-Process -Force
+Get-Process -Name clearbrowser -ErrorAction SilentlyContinue | Stop-Process -Force
 
 #Checks each user folder and removes Clear instance from \appdata\local\programs\ and the downloads folder.
 $UserFolders = get-childitem -Force -Directory -path "c:\users" | select-object name
