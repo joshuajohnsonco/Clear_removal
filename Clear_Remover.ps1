@@ -1,4 +1,4 @@
-#Powershell script written to remediate Clear.exe malware. Joshua Johnson Updated 2/7/23
+#Powershell script written to remediate Clear.exe malware. Joshua Johnson 2/6/23
 
 New-Item -Path 'C:\temp' -ItemType Directory -Force
 Start-Transcript -Path "c:\temp\Clear_remover.txt"
@@ -16,12 +16,17 @@ foreach ($UserFolder in $UserFolders)
 	$path = "c:\users\$user";
 	foreach ( $file in 
 				'\Desktop\Clear.lnk',
+				'\Desktop\Clear.lnk',
 				'\downloads\Clear*.exe',
+				'\AppData\Local\Clear\*',
+				'\AppData\Local\ClearBar\*',
 				'\downloads\Wave*Browser*.exe',
+				'\AppData\Local\ClearBrowser\*',
 				'\downloads\ManualsLibrary*.exe',
 				'\appdata\local\programs\clear\*',
 				'\appdata\local\programs\ClearBar\*',
-				'\appdata\roaming\microsoft\windows\Start Menu\Programs\Clear.lnk'						
+				'\appdata\roaming\microsoft\windows\Start Menu\Programs\Clear.lnk',
+				'\appdata\roaming\microsoft\windows\Start Menu\Programs\ClearBar.lnk'					
 	        ) {
 	            Remove-Item -path $path$file -ErrorAction Ignore -Recurse -Verbose
 		#Write-Host Full path: $path$file;
@@ -29,9 +34,10 @@ foreach ($UserFolder in $UserFolders)
 }
 
 #Deletes the scheduled tasks.
-Remove-Item -path "C:\windows\system32\tasks\ClearStartAtLoginTask" -ErrorAction Ignore -Recurse -Verbose
+Remove-Item -path "C:\Windows\Prefetch\Clear*.pf" -ErrorAction Ignore -Recurse -Verbose
 Remove-Item -path "C:\windows\system32\tasks\ClearUpdateChecker" -ErrorAction Ignore -Recurse -Verbose
-Remove-Item -path "C:\windows\system32\tasks\ClearbarStartAtLoginTask" -ErrorAction Ignore -Recurse -Verbose
 Remove-Item -path "C:\windows\system32\tasks\ClearbarUpdateChecker" -ErrorAction Ignore -Recurse -Verbose
+Remove-Item -path "C:\windows\system32\tasks\ClearStartAtLoginTask" -ErrorAction Ignore -Recurse -Verbose
+Remove-Item -path "C:\windows\system32\tasks\ClearbarStartAtLoginTask" -ErrorAction Ignore -Recurse -Verbose
 
 Stop-Transcript
